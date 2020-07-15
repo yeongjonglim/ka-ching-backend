@@ -14,28 +14,20 @@ class UserResource(Resource):
     """ Verbs relative to the users """
 
     @staticmethod
-    def get(last_name, first_name):
+    def get(id):
         """ Return an user key information based on his name """
-        user = UserRepository.get(last_name=last_name, first_name=first_name)
-        return jsonify({"user": user.json})
+        user = UserRepository.get(id=id)
+        if user:
+            return jsonify({"user": user.json})
+        return {}, 404
 
     @staticmethod
     @parse_params(
-        Argument("age", location="json", required=True, help="The age of the user.")
+        Argument("starting_asset", location="json"),
+        Argument("starting_liability", location="json")
     )
-    def post(last_name, first_name, age):
-        """ Create an user based on the sent information """
-        user = UserRepository.create(
-            last_name=last_name, first_name=first_name, age=age
-        )
-        return jsonify({"user": user.json})
-
-    @staticmethod
-    @parse_params(
-        Argument("age", location="json", required=True, help="The age of the user.")
-    )
-    def put(last_name, first_name, age):
+    def put(id, starting_asset=None, starting_liability=None):
         """ Update an user based on the sent information """
         repository = UserRepository()
-        user = repository.update(last_name=last_name, first_name=first_name, age=age)
+        user = repository.update(id, starting_asset, starting_liability)
         return jsonify({"user": user.json})

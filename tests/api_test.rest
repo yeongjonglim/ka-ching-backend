@@ -1,0 +1,28 @@
+# Check user in db
+http://localhost:5000
+GET /api/users/14
+
+# Create new user
+http://localhost:5000
+Content-Type: application/json
+POST /api/auth/register
+{
+    "email": "hello@example.com",
+    "password": "Pa$sw0rd",
+    "last_name": "World",
+    "first_name": "Hello"
+}
+
+# Login a user
+http://localhost:5000
+Content-Type: application/json
+POST /api/auth/login
+{
+    "email": "hello@example.com",
+    "password": "Pa$sw0rd"
+}
+
+# Logout a user
+http://localhost:5000
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTQ4MjQxOTYsImlhdCI6MTU5NDgwNjE5Niwic3ViIjoxNH0.zsDDTby56-7lwYaL5b66XslLmSMFDEtWXt3QX1Yc45I
+POST /api/auth/logout

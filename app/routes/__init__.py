@@ -1,2 +1,2 @@
 from .user import USER_BLUEPRINT
-from .hello import HELLO_BLUEPRINT
+from .auth import AUTH_BLUEPRINT

@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_migrate import Migrate
 from flask.blueprints import Blueprint
 
 import config
@@ -16,8 +17,10 @@ server = Flask(__name__)
 server.debug = config.DEBUG
 server.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URI
 server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS
+server.config["SECRET_KEY"] = config.SECRET_KEY
 db.init_app(server)
 db.app = server
+migrate = Migrate(server, db)
 
 for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
