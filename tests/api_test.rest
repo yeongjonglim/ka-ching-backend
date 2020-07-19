@@ -26,3 +26,20 @@ POST /api/auth/login
 http://localhost:5000
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTQ4MjQxOTYsImlhdCI6MTU5NDgwNjE5Niwic3ViIjoxNH0.zsDDTby56-7lwYaL5b66XslLmSMFDEtWXt3QX1Yc45I
 POST /api/auth/logout
+
+# Get all transactions
+http://localhost:5000
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTUxMzU4NjIsImlhdCI6MTU5NTExNzg2Miwic3ViIjoxNH0.eEE6bZSas2kUqyxjfkcWeOdaN5XYUxOI6oZUtQgnN-M
+GET /api/transactions
+
+# Create new transaction
+http://localhost:5000
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTUwOTkwMzUsImlhdCI6MTU5NTA4MTAzNSwic3ViIjoxNH0.vzkJ4Y9-hcCi0eNXQwZGItmRSqRm3MPVAsO59gPP4dI
+POST /api/transactions
+{
+    "transaction_date": "20200715",
+    "category": "income",
+    "tag": "salary",
+    "description": "KPMG",
+    "amount": "3500"
+}

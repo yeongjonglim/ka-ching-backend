@@ -22,7 +22,6 @@ def parse_params(*arguments):
             parser = reqparse.RequestParser()
             for argument in arguments:
                 parser.add_argument(argument)
-            print(parser.parse_args())
             kwargs.update(parser.parse_args())
             return func(*args, **kwargs)
 

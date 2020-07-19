@@ -4,6 +4,7 @@ from flask.blueprints import Blueprint
 
 import config
 import routes
+import errors
 from models import db
 
 # config your API specs
@@ -26,6 +27,9 @@ for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
         server.register_blueprint(blueprint, url_prefix=config.APP_ROOT)
 
+for blueprint in vars(errors).values():
+    if isinstance(blueprint, Blueprint):
+        server.register_blueprint(blueprint, url_prefix=config.APP_ROOT)
 
 if __name__ == "__main__":
     server.run(host=config.HOST, port=config.PORT)

@@ -9,13 +9,14 @@ from flask import current_app
 from . import db
 from . import BlacklistToken
 from .abc import BaseModel, MetaBaseModel
-from utils.errors import AuthError
+from errors import AuthError
 
 
 class User(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The User model """
 
     __tablename__ = "users"
+    to_json_filter = ["transactions", "password_hash"]
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
@@ -23,6 +24,7 @@ class User(db.Model, BaseModel, metaclass=MetaBaseModel):
     joined_datetime = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     first_name = db.Column(db.String(300))
     last_name = db.Column(db.String(300))
+    transactions = db.relationship('CashTransaction', back_populates='user', lazy=True)
 
     def __init__(self,
                  email,
@@ -69,7 +71,7 @@ class User(db.Model, BaseModel, metaclass=MetaBaseModel):
             if is_blacklisted_token:
                 raise AuthError({"code": "blacklisted_token",
                                  "description":
-                                 "blacklisted token,"
+                                 "blacklisted token, "
                                  "please sign in again"}, 401)
             else:
                 return User.query.filter_by(id=payload['sub']).first()

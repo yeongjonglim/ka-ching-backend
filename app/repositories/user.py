@@ -3,7 +3,7 @@ import logging
 import bcrypt
 from models import User, BlacklistToken
 
-from utils.errors import AuthError
+from errors import AuthError
 
 
 class UserRepository:

@@ -1,7 +1,7 @@
 """
 Define an Abstract Base Class (ABC) for models
 """
-from datetime import datetime
+from datetime import datetime, date
 from weakref import WeakValueDictionary
 
 from sqlalchemy import inspect
@@ -33,6 +33,7 @@ class BaseModel:
 
     print_filter = ()
     to_json_filter = ()
+    datetime_format = "%Y-%m-%d"
 
     def __repr__(self):
         """ Define a base way to print models
@@ -52,8 +53,8 @@ class BaseModel:
             Columns inside `to_json_filter` are excluded """
         return {
             column: value
-            if not isinstance(value, datetime)
-            else value.strftime("%Y-%m-%d")
+            if not isinstance(value, datetime) and not isinstance(value, date)
+            else value.strftime(self.datetime_format)
             for column, value in self._to_dict().items()
             if column not in self.to_json_filter
         }

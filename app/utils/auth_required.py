@@ -4,7 +4,8 @@ Wrap any routes with authentication check
 from functools import wraps
 from flask import request
 
-from .errors import AuthError
+from models import User
+from errors import AuthError
 
 
 def get_token_auth_header():
@@ -36,14 +37,13 @@ def get_token_auth_header():
     return token
 
 
-def requires_auth(f):
+def auth_required(f):
     """Determines if the Access Token is valid
     """
     @wraps(f)
     def decorated(*args, **kwargs):
         token = get_token_auth_header()
         if token:
-            from models import User
             user = User.decode_auth_token(token)
 
             return f(user, *args, **kwargs)
